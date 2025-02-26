@@ -8,6 +8,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 1000f;
 
     private Animator _animator;
+    private PlayerInputActions _playerInputActions;
+
+    private void Awake()
+    {
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Player.Enable();
+    }
 
     private void Start()
     {
@@ -22,10 +29,15 @@ public class Player : MonoBehaviour
 
     private void PlayerMovements()
     {
+        /*Ancien Input Manager
         float dirX = Input.GetAxis("Horizontal");
         float dirZ = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(dirX, 0f, dirZ);
+        */
+
+        Vector2 direction2D = _playerInputActions.Player.Move.ReadValue<Vector2>();
+        Vector3 direction = new Vector3(direction2D.x, 0f, direction2D.y);
 
         // Mormalise mon Vecteur avec une valeur maximale de 1
         direction.Normalize();
