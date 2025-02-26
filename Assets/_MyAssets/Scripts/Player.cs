@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
     private PlayerInputActions _playerInputActions;
+    private Rigidbody _rb;
 
     private void Awake()
     {
@@ -19,9 +20,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
+        _rb= GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         PlayerMovements();
 
@@ -42,14 +44,16 @@ public class Player : MonoBehaviour
         // Mormalise mon Vecteur avec une valeur maximale de 1
         direction.Normalize();
 
-        transform.Translate(direction * Time.deltaTime * _playerSpeed, Space.World);
+        _rb.linearVelocity = direction * Time.fixedDeltaTime * _playerSpeed;
+
+        //transform.Translate(direction * Time.deltaTime * _playerSpeed, Space.World);
 
 
 
         if (direction != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.fixedDeltaTime);
             _animator.SetBool(IS_WALKING, true);
         }
         else
