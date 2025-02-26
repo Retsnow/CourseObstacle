@@ -2,8 +2,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private const string IS_WALKING = "isWalking";
+
     [SerializeField] private float _playerSpeed = 10f;
     [SerializeField] private float _rotationSpeed = 1000f;
+
+    private Animator _animator;
+
+    private void Start()
+    {
+        _animator = GetComponentInChildren<Animator>();
+    }
 
     private void Update()
     {
@@ -29,6 +38,11 @@ public class Player : MonoBehaviour
         {
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
+            _animator.SetBool(IS_WALKING, true);
+        }
+        else
+        {
+            _animator.SetBool(IS_WALKING, false);
         }
     }
 }
