@@ -44,10 +44,20 @@ public class Player : MonoBehaviour
         // Mormalise mon Vecteur avec une valeur maximale de 1
         direction.Normalize();
 
+
+        /* Appliquer la force sur l'objet
+         
+        _rb.AddForce(direction * Time.fixedDeltaTime * _playerSpeed);
+        */
+
+        /* Donne Vitesse au corps physique
+         */
         _rb.linearVelocity = direction * Time.fixedDeltaTime * _playerSpeed;
+       
 
-        //transform.Translate(direction * Time.deltaTime * _playerSpeed, Space.World);
-
+        /* Déplacement par téléportation
+        transform.Translate(direction * Time.deltaTime * _playerSpeed, Space.World);
+        */
 
 
         if (direction != Vector3.zero)
