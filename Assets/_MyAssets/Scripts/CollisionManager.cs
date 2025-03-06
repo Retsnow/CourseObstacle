@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionManager : MonoBehaviour
 {
@@ -25,8 +26,19 @@ public class CollisionManager : MonoBehaviour
             }
             else if (this.gameObject.tag == "Objective" && !_isHit)
             {
-                Debug.Log("Fin partie !!! / Hits = " + GameManager.Instance.Score);
-                collision.gameObject.SetActive(false); // Désactive le joueu sur la scène
+                int noScene = SceneManager.GetActiveScene().buildIndex;
+                    if (noScene == SceneManager.sceneCountInBuildSettings - 1)
+                    {
+                        _gameManager.FinPartie();
+                        collision.gameObject.SetActive(false); // Désactive le joueur sur la scène
+                    }
+                    else
+                    {
+                        GameManager.Instance.SetNiveau1(Time.time);
+                        SceneManager.LoadScene(noScene + 1);
+                    }
+
+                
             }
         }
         

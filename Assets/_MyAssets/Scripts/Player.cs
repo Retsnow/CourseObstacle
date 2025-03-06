@@ -23,6 +23,12 @@ public class Player : MonoBehaviour
         _rb= GetComponent<Rigidbody>();
     }
 
+    private void OnDestroy()
+    {
+        // S'assure d'arr^té l'écoute quand le joueur est détruit
+        _playerInputActions.Player.Disable();
+    }
+
     private void FixedUpdate()
     {
         PlayerMovements();
