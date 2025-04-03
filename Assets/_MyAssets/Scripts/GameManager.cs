@@ -3,15 +3,18 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    // *** singleton ***
-    public static GameManager Instance;
-
     private float _tempsNiveau1;  // Taleau
     private int _collisionsNiveau1; // Tableau
 
     private float _tempsDepart;
+    public float TempsDepart => _tempsDepart;
     private int _score;
     public int Score => _score;
+
+    // *** singleton ***
+    public static GameManager Instance;
+
+
 
     private void Awake()
     {
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore()
     {
         _score += 1;
+        UIManager.Instance.UpdateScore(_score);
     }
 
     public void SetNiveau1(float temps)
